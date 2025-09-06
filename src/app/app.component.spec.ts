@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import { App } from './app';
 
-describe('App', () => {
+import { AppComponent } from './app.component';
+
+describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [AppComponent],
     }).compileComponents();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
+    const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    // Проверяем, что компонент успешно создается
     expect(app).toBeTruthy();
   });
 });
