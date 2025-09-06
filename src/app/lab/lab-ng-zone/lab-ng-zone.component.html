@@ -1,0 +1,30 @@
+<div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in">
+  <h2 class="text-3xl font-bold text-cyan-300 mb-4">Демонстрация: Оптимизация NgZone</h2>
+  <p class="text-gray-400 mb-6">
+    Наведите курсор на зеленый блок, чтобы увидеть, как каждое движение мыши запускает цикл Change Detection. Затем
+    наведите на желтый блок, где событие вынесено из зоны Angular, и обратите внимание, что общий счетчик CD не растет.
+  </p>
+  <div class="text-center bg-gray-900/50 rounded-lg p-4 mb-6">
+    <p class="text-lg text-gray-300">Общее количество циклов Change Detection в этом компоненте:</p>
+    <p class="text-4xl font-bold text-cyan-400 tracking-wider">{{ cdCounter() }}</p>
+  </div>
+  <div class="grid md:grid-cols-2 gap-8">
+    <div (mousemove)="handleInZoneMouseMove($event)"
+      class="border-2 border-green-500/50 rounded-lg p-6 bg-green-900/20 h-48 flex flex-col justify-center cursor-pointer">
+      <h3 class="text-2xl font-bold text-green-400 mb-3 text-center">Внутри NgZone</h3>
+      <div class="text-lg font-mono bg-gray-900 p-4 rounded-md text-left">
+        <p>Событий <code>mousemove</code>: <span class="font-bold text-green-400">{{ inZoneCounter() }}</span></p>
+        <p>Координаты: <span class="font-bold text-green-400">{{ inZoneCoords().x }}, {{ inZoneCoords().y }}</span></p>
+      </div>
+    </div>
+    <div #outZoneDemo (mouseenter)="setupOutZoneListener(outZoneDemo)"
+      class="border-2 border-yellow-500/50 rounded-lg p-6 bg-yellow-900/20 h-48 flex flex-col justify-center cursor-pointer">
+      <h3 class="text-2xl font-bold text-yellow-400 mb-3 text-center">Вне NgZone</h3>
+      <div class="text-lg font-mono bg-gray-900 p-4 rounded-md text-left">
+        <p>Событий <code>mousemove</code>: <span class="font-bold text-yellow-400">{{ outZoneCounter() }}</span></p>
+        <p>Координаты: <span class="font-bold text-yellow-400">{{ outZoneCoords().x }}, {{ outZoneCoords().y }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
