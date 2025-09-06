@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +9,12 @@ import { CommonModule } from '@angular/common';
     <div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in">
       <h1 class="text-5xl font-bold text-cyan-400 mb-4">Привет, я Мусин Михаил!</h1>
       <p class="text-xl text-gray-300 mb-6">
-        Frontend-разработчик, увлеченный созданием интерактивных и производительных веб-приложений с помощью Angular.
+        Frontend-разработчик, увлеченный созданием интерактивных и производительных веб-приложений
+        с помощью Angular.
       </p>
       <p class="text-lg text-gray-400 mb-8">
-        Это портфолио — не просто визитка, а "живая" демонстрация моих навыков. Каждый раздел здесь — это небольшой проект, показывающий, как я решаю практические задачи.
+        Это портфолио — не просто визитка, а "живая" демонстрация моих навыков. Каждый раздел
+        здесь — это небольшой проект, показывающий, как я решаю практические задачи.
       </p>
 
       <div class="border-t border-gray-700 pt-6">
@@ -35,14 +37,18 @@ import { CommonModule } from '@angular/common';
       @apply bg-cyan-800/50 text-cyan-300 text-lg px-4 py-2 rounded-lg font-medium;
     }
     @keyframes fade-in {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     .animate-fade-in {
       animation: fade-in 0.5s ease-out forwards;
     }
-  `
+  `,
 })
-export class HomeComponent {
-
-}
+export class HomeComponent {}

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
@@ -7,5 +8,8 @@ export const routes: Routes = [
     path: 'projects',
     loadComponent: () => import('./projects/projects.component').then((m) => m.ProjectsComponent),
   },
-  // TODO: Добавить ленивую загрузку для маршрута /lab
+  {
+    path: 'lab',
+    loadComponent: () => import('./lab/lab.component').then((m) => m.LabComponent),
+  },
 ];
