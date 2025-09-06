@@ -1,14 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
-
-import { GithubRepo } from './github.models';
+import { GithubRepo } from './github.service';
 import { GithubService } from './github.service';
 import { LanguageClassPipe } from './language-class.pipe';
-
 interface ReposState {
   repos: GithubRepo[];
   loading: boolean;
@@ -40,13 +38,13 @@ export class ProjectsComponent {
     ),
     { initialValue: this.initialState }
   );
-  public repos = computed(() => this.reposState().repos);
-  public isLoading = computed(() => this.reposState().loading);
-  public errorMsg = computed(() => this.reposState().error);
-  private searchTerm = toSignal(
+  public readonly repos = computed(() => this.reposState().repos);
+  public readonly isLoading = computed(() => this.reposState().loading);
+  public readonly errorMsg = computed(() => this.reposState().error);
+  private readonly searchTerm = toSignal(
     this.searchControl.valueChanges.pipe(startWith(''), debounceTime(300), distinctUntilChanged())
   );
-  public filteredRepos = computed(() => {
+  public readonly filteredRepos = computed(() => {
     const allRepos = this.repos();
     const term = (this.searchTerm() || '').toLowerCase();
     if (!term) {
