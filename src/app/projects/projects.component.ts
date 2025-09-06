@@ -14,6 +14,7 @@ interface ReposState {
   loading: boolean;
   error: string | null;
 }
+const GITHUB_USERNAME = 'Musin-Mihail';
 @Component({
   selector: 'app-projects',
   standalone: true,
@@ -24,23 +25,26 @@ interface ReposState {
 })
 export class ProjectsComponent {
   private githubService = inject(GithubService);
-  public searchControl = new FormControl('');
-  private reposState$ = this.githubService.getRepos('Musin-Mihail').pipe(
-    map((repos) => ({ repos, loading: false, error: null } as ReposState)),
-    startWith({ repos: [], loading: true, error: null }),
-    catchError((err) => {
-      console.error('Ошибка при загрузке репозиториев:', err);
-      const errorMessage = 'Не удалось загрузить проекты. Проверьте консоль или попробуйте позже.';
-      return of({ repos: [], loading: false, error: errorMessage } as ReposState);
-    })
+  public searchControl = new FormControl<string>('', { nonNullable: true });
+  private readonly initialState: ReposState = { repos: [], loading: true, error: null };
+  private reposState = toSignal(
+    this.githubService.getRepos(GITHUB_USERNAME).pipe(
+      map((repos): ReposState => ({ repos, loading: false, error: null })),
+      startWith(this.initialState),
+      catchError((err) => {
+        console.error('Ошибка при загрузке репозиториев:', err);
+        const errorMessage =
+          'Не удалось загрузить проекты. Проверьте консоль или попробуйте позже.';
+        return of<ReposState>({ repos: [], loading: false, error: errorMessage });
+      })
+    ),
+    { initialValue: this.initialState }
   );
-  private state = toSignal(this.reposState$);
-  public repos = computed(() => this.state()?.repos ?? []);
-  public isLoading = computed(() => this.state()?.loading ?? true);
-  public errorMsg = computed(() => this.state()?.error ?? null);
+  public repos = computed(() => this.reposState().repos);
+  public isLoading = computed(() => this.reposState().loading);
+  public errorMsg = computed(() => this.reposState().error);
   private searchTerm = toSignal(
-    this.searchControl.valueChanges.pipe(debounceTime(300), distinctUntilChanged(), startWith('')),
-    { initialValue: '' }
+    this.searchControl.valueChanges.pipe(startWith(''), debounceTime(300), distinctUntilChanged())
   );
   public filteredRepos = computed(() => {
     const allRepos = this.repos();
@@ -51,7 +55,7 @@ export class ProjectsComponent {
     return allRepos.filter(
       (repo) =>
         repo.name.toLowerCase().includes(term) ||
-        repo.description?.toLowerCase().includes(term)
+        (repo.description && repo.description.toLowerCase().includes(term))
     );
   });
 }

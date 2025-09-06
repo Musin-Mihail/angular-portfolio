@@ -6,14 +6,10 @@
       </div>
       <div class="hidden md:flex space-x-6 text-lg">
         @for (link of navLinks; track link.path) {
-          <a
-            [routerLink]="link.path"
-            routerLinkActive="text-cyan-400 border-b-2 border-cyan-400"
-            [routerLinkActiveOptions]="link.options"
-            class="hover:text-cyan-300 transition-colors duration-300 pb-1"
-          >
-            {{ link.label }}
-          </a>
+        <a [routerLink]="link.path" routerLinkActive="text-cyan-400 border-b-2 border-cyan-400"
+          [routerLinkActiveOptions]="link.options" class="hover:text-cyan-300 transition-colors duration-300 pb-1">
+          {{ link.label }}
+        </a>
         }
       </div>
     </nav>
