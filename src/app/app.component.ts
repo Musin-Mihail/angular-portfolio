@@ -5,7 +5,13 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
-  templateUrl: './app.component.html', // Используем внешний шаблон
-  styleUrls: ['./app.component.scss'], // Используем внешние стили
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {}
+export class AppComponent {
+  navLinks = [
+    { path: '/', label: 'Обо мне', options: { exact: true } },
+    { path: '/projects', label: 'Проекты', options: { exact: false } },
+    { path: '/lab', label: 'Лаборатория', options: { exact: false } },
+  ];
+}

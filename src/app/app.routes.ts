@@ -12,4 +12,5 @@ export const routes: Routes = [
     path: 'lab',
     loadComponent: () => import('./lab/lab.component').then((m) => m.LabComponent),
   },
+  { path: '**', redirectTo: '' }
 ];

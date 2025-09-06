@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-lab',
@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   imports: [CommonModule],
   templateUrl: './lab.component.html',
   styleUrls: ['./lab.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LabComponent {}

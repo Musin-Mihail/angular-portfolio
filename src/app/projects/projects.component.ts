@@ -1,100 +1,57 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
 
-import { GithubRepo, GithubService } from './github.service';
+import { GithubRepo } from './github.models';
+import { GithubService } from './github.service';
+import { LanguageClassPipe } from './language-class.pipe';
 
-// Интерфейс для управления состоянием компонента
-interface GithubState {
+interface ReposState {
   repos: GithubRepo[];
   loading: boolean;
   error: string | null;
 }
-
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LanguageClassPipe],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsComponent {
   private githubService = inject(GithubService);
-  searchControl = new FormControl('');
-
-  // Единый сигнал для хранения состояния
-  private state = signal<GithubState>({
-    repos: [],
-    loading: true,
-    error: null,
-  });
-
-  // Вычисляемые сигналы для удобного доступа к состоянию в шаблоне
-  repos = computed(() => this.state().repos);
-  isLoading = computed(() => this.state().loading);
-  errorMsg = computed(() => this.state().error);
-
-  // Сигнал для поискового запроса
+  public searchControl = new FormControl('');
+  private reposState$ = this.githubService.getRepos('Musin-Mihail').pipe(
+    map((repos) => ({ repos, loading: false, error: null } as ReposState)),
+    startWith({ repos: [], loading: true, error: null }),
+    catchError((err) => {
+      console.error('Ошибка при загрузке репозиториев:', err);
+      const errorMessage = 'Не удалось загрузить проекты. Проверьте консоль или попробуйте позже.';
+      return of({ repos: [], loading: false, error: errorMessage } as ReposState);
+    })
+  );
+  private state = toSignal(this.reposState$);
+  public repos = computed(() => this.state()?.repos ?? []);
+  public isLoading = computed(() => this.state()?.loading ?? true);
+  public errorMsg = computed(() => this.state()?.error ?? null);
   private searchTerm = toSignal(
     this.searchControl.valueChanges.pipe(debounceTime(300), distinctUntilChanged(), startWith('')),
     { initialValue: '' }
   );
-
-  // Вычисляемый сигнал для отфильтрованных репозиториев
-  filteredRepos = computed(() => {
+  public filteredRepos = computed(() => {
     const allRepos = this.repos();
     const term = (this.searchTerm() || '').toLowerCase();
-    if (!Array.isArray(allRepos)) {
-      return [];
+    if (!term) {
+      return allRepos;
     }
-    return allRepos.filter((repo) => repo.name.toLowerCase().includes(term));
+    return allRepos.filter(
+      (repo) =>
+        repo.name.toLowerCase().includes(term) ||
+        repo.description?.toLowerCase().includes(term)
+    );
   });
-
-  constructor() {
-    this.loadRepos();
-  }
-
-  // Метод для загрузки репозиториев
-  private loadRepos() {
-    this.state.update((state) => ({ ...state, loading: true, error: null }));
-    this.githubService
-      .getRepos('Musin-Mihail')
-      .pipe(
-        catchError((err) => {
-          console.error(err);
-          this.state.update((state) => ({
-            ...state,
-            error: 'Не удалось загрузить проекты. Пожалуйста, попробуйте позже.',
-            repos: [],
-          }));
-          return of([]);
-        })
-      )
-      .subscribe((repos) => {
-        this.state.update((state) => ({
-          ...state,
-          repos,
-          loading: false,
-        }));
-      });
-  }
-
-  getLanguageClass(language: string): string {
-    const lang = (language || 'default').toLowerCase();
-    switch (lang) {
-      case 'typescript':
-        return 'bg-blue-900/50 text-blue-300';
-      case 'javascript':
-        return 'bg-yellow-900/50 text-yellow-300';
-      case 'html':
-        return 'bg-orange-900/50 text-orange-300';
-      case 'scss':
-        return 'bg-pink-900/50 text-pink-300';
-      default:
-        return 'bg-gray-700/50 text-gray-300';
-    }
-  }
 }
