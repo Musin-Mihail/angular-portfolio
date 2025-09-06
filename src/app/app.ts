@@ -1,12 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  // Указываем, что компонент является standalone
+  standalone: true,
+  // Импортируем RouterOutlet для работы с маршрутизацией
   imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  // Прямое указание шаблона и стилей
+  template: `
+    <!-- Основное место для отображения компонентов в зависимости от маршрута -->
+    <router-outlet></router-outlet>
+  `,
+  styles: [],
 })
-export class App {
-  protected readonly title = signal('angular-portfolio');
-}
+export class App {}
