@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in">
-      <h1 class="text-5xl font-bold text-cyan-400 mb-4">Привет, я [Ваше Имя]!</h1>
+      <h1 class="text-5xl font-bold text-cyan-400 mb-4">Привет, я Мусин Михаил!</h1>
       <p class="text-xl text-gray-300 mb-6">
         Frontend-разработчик, увлеченный созданием интерактивных и производительных веб-приложений с помощью Angular.
       </p>
