@@ -12,7 +12,27 @@
         </a>
         }
       </div>
+      <div class="md:hidden">
+        <button (click)="isMobileMenuOpen.set(!isMobileMenuOpen())" class="text-white focus:outline-none">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+      </div>
     </nav>
+    @if (isMobileMenuOpen()) {
+    <div class="md:hidden bg-gray-800" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        @for (link of navLinks; track link.path) {
+        <a [routerLink]="link.path" routerLinkActive="bg-cyan-900 text-white" [routerLinkActiveOptions]="link.options"
+          (click)="closeMobileMenu()"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          {{ link.label }}
+        </a>
+        }
+      </div>
+    </div>
+    }
   </header>
   <main class="container mx-auto px-6 py-12">
     <router-outlet></router-outlet>
