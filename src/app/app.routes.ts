@@ -22,6 +22,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./lab/lab-ng-zone/lab-ng-zone.component').then((m) => m.LabNgZoneComponent),
       },
+      {
+        path: 'projection',
+        loadComponent: () =>
+          import('./lab/lab-projection/lab-projection.component').then(
+            (m) => m.LabProjectionComponent
+          ),
+      },
       { path: '', redirectTo: 'ngzone', pathMatch: 'full' },
     ],
   },

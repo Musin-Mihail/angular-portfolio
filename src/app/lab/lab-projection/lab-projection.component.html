@@ -1,0 +1,43 @@
+<div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in space-y-8">
+  <div>
+    <h2 class="text-3xl font-bold text-cyan-300 mb-4">Демонстрация: Content Projection</h2>
+    <p class="text-gray-400 mb-6">
+      Этот пример показывает работу переиспользуемого компонента-карточки, который использует
+      <code>&lt;ng-content&gt;</code> для гибкого отображения различного контента. С помощью атрибутов-селекторов
+      (например, <code>[card-title]</code>) можно вставлять HTML в определенные "слоты" внутри компонента.
+    </p>
+  </div>
+  <app-card>
+    <h3 card-title>Простая карточка</h3>
+    <div card-body>
+      <p>Это базовый пример использования. Только заголовок и основной текст были "спроецированы" в компонент
+        <code>&lt;app-card&gt;</code>.
+      </p>
+    </div>
+  </app-card>
+  <app-card>
+    <h3 card-title>Карточка с изображением</h3>
+    <div card-body class="flex items-center space-x-6">
+      <img class="h-24 w-24 rounded-lg object-cover" src="https://angular.io/assets/images/logos/angular/angular.svg"
+        alt="Angular Logo">
+      <ul class="list-disc list-inside text-gray-400">
+        <li>Гибкая структура контента</li>
+        <li>Переиспользование компонента</li>
+        <li>Использование селекторов для слотов</li>
+      </ul>
+    </div>
+    <div card-footer class="flex justify-end">
+      <button class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+        Подробнее
+      </button>
+    </div>
+  </app-card>
+  <app-card>
+    <h3 card-title>Карточка без футера</h3>
+    <div card-body>
+      <p>Этот пример демонстрирует, что слоты являются опциональными. Если контент для футера не предоставлен, секция
+        <code>&lt;footer&gt;</code> просто не отображается.
+      </p>
+    </div>
+  </app-card>
+</div>

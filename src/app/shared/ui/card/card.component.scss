@@ -1,0 +1,7 @@
+.card-footer {
+  display: flex;
+  align-items: center;
+  &:empty {
+    display: none;
+  }
+}
