@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "src/server.ts": {
+    "api/server.ts": {
       "memory": 1024
     }
   },
