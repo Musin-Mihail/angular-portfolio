@@ -9,24 +9,19 @@
       class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-shadow duration-300" />
   </div>
 
-  <!-- Блок состояний: загрузка, ошибка, данные -->
   @if (isLoading()) {
-  <!-- Состояние загрузки -->
   <div class="flex justify-center items-center h-64">
     <div class="loader"></div>
   </div>
   } @else if (errorMsg()) {
-  <!-- Состояние ошибки -->
   <div class="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-lg text-center" role="alert">
     <p class="font-bold">Ошибка!</p>
     <p>{{ errorMsg() }}</p>
   </div>
   } @else {
-  <!-- Состояние с данными -->
-  @if (filteredRepos().length > 0) {
-  <div [@listAnimation]="filteredRepos()" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     @for (repo of filteredRepos(); track repo.name) {
-    <a [href]="repo.html_url" target="_blank" rel="noopener noreferrer"
+    <a @itemAnimation [href]="repo.html_url" target="_blank" rel="noopener noreferrer"
       class="bg-gray-800 rounded-xl p-6 flex flex-col shadow-lg hover:shadow-cyan-500/20 transform hover:-translate-y-2 transition-all duration-300 border border-transparent hover:border-cyan-500 group">
       <div class="flex-grow">
         <h3 class="text-2xl font-bold text-cyan-400 group-hover:underline mb-2">
@@ -63,7 +58,8 @@
     </a>
     }
   </div>
-  } @else {
+
+  @if (filteredRepos().length === 0) {
   <div class="text-center py-16 text-gray-500">
     <p class="text-2xl">Проекты не найдены.</p>
     <p>Попробуйте изменить поисковый запрос.</p>
