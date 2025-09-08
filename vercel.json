@@ -1,8 +1,14 @@
 {
+  "version": 2,
+  "functions": {
+    "src/server.ts": {
+      "memory": 1024
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api"
+      "destination": "/src/server.ts"
     }
   ],
   "headers": [
