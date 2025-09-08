@@ -11,14 +11,6 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "connect-src 'self' https://api.github.com https://jsonplaceholder.typicode.com"
-  );
-  next();
-});
-
 app.get('/api/test-500', (req, res) => {
   res.status(500).json({ message: 'Это симулированная внутренняя ошибка сервера!' });
 });
