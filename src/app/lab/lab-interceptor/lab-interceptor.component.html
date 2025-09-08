@@ -1,0 +1,56 @@
+<div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in space-y-8">
+  <div>
+    <h2 class="text-3xl font-bold text-cyan-300 mb-4">Демонстрация: HttpInterceptor</h2>
+    <p class="text-gray-400 mb-6">
+      Этот пример показывает работу HttpInterceptor. При нажатии на кнопки ниже, отправляется HTTP-запрос, который
+      перехватывается. Интерцептор добавляет к нему кастомный заголовок
+      <code>X-Custom-Auth: 'my-token'</code> и централизованно обрабатывает ошибки.
+    </p>
+    <p class="text-gray-400">
+      Откройте инструменты разработчика (F12), вкладку "Network", чтобы увидеть добавленный заголовок в исходящем
+      запросе.
+    </p>
+  </div>
+
+  <div class="flex flex-wrap gap-4">
+    <button (click)="sendSuccessRequest()"
+      class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+      Отправить успешный запрос (200 OK)
+    </button>
+    <button (click)="sendError404Request()"
+      class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+      Вызвать ошибку (404 Not Found)
+    </button>
+    <button (click)="sendError500Request()"
+      class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+      Вызвать ошибку (500 Server Error)
+    </button>
+  </div>
+
+  <div class="min-h-[10rem] bg-gray-900/50 rounded-lg p-6">
+    @switch (state().status) {
+    @case ('loading') {
+    <div class="flex items-center justify-center h-full">
+      <div class="loader"></div>
+    </div>
+    }
+    @case ('error') {
+    <div class="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-lg text-left" role="alert">
+      <p class="font-bold">Ошибка перехвачена интерцептором!</p>
+      <p>{{ state().error }}</p>
+    </div>
+    }
+    @case ('success') {
+    <div class="text-green-300">
+      <p class="font-bold text-lg mb-2">Запрос успешно выполнен!</p>
+      <p class="font-mono text-sm bg-gray-900 p-4 rounded-md whitespace-pre-wrap">{{ state().data | json }}</p>
+    </div>
+    }
+    @default {
+    <div class="flex items-center justify-center h-full text-gray-500">
+      <p>Нажмите на кнопку, чтобы отправить запрос.</p>
+    </div>
+    }
+    }
+  </div>
+</div>

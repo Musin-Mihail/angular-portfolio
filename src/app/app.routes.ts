@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
+
 import { HomeComponent } from './home/home.component';
+
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   {
@@ -10,6 +12,13 @@ export const routes: Routes = [
     path: 'lab',
     loadComponent: () => import('./lab/lab.component').then((m) => m.LabComponent),
     children: [
+      {
+        path: 'interceptor',
+        loadComponent: () =>
+          import('./lab/lab-interceptor/lab-interceptor.component').then(
+            (m) => m.LabInterceptorComponent
+          ),
+      },
       {
         path: 'directives',
         loadComponent: () =>
@@ -29,7 +38,7 @@ export const routes: Routes = [
             (m) => m.LabProjectionComponent
           ),
       },
-      { path: '', redirectTo: 'ngzone', pathMatch: 'full' },
+      { path: '', redirectTo: 'interceptor', pathMatch: 'full' },
     ],
   },
   { path: '**', redirectTo: '' },
