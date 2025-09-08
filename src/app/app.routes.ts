@@ -38,6 +38,11 @@ export const routes: Routes = [
             (m) => m.LabProjectionComponent
           ),
       },
+      {
+        path: 'pipes',
+        loadComponent: () =>
+          import('./lab/lab-pipes/lab-pipes.component').then((m) => m.LabPipesComponent),
+      },
       { path: '', redirectTo: 'interceptor', pathMatch: 'full' },
     ],
   },

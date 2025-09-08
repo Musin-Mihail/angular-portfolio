@@ -2,8 +2,8 @@
   <div class="bg-gray-800 rounded-xl shadow-2xl p-8 mb-8">
     <h1 class="text-4xl font-bold text-cyan-400 mb-4">Лаборатория Angular</h1>
     <p class="text-lg text-gray-400">
-      Этот раздел посвящен демонстрации различных техник и возможностей Angular. [cite: 77] Выберите один из
-      экспериментов ниже, чтобы увидеть его в действии. [cite: 78]
+      Этот раздел посвящен демонстрации различных техник и возможностей Angular. Выберите один из
+      экспериментов ниже, чтобы увидеть его в действии.
     </p>
   </div>
   <nav class="flex flex-wrap gap-4 mb-8">
@@ -22,6 +22,10 @@
     <a routerLink="projection" routerLinkActive="bg-cyan-800/80 text-cyan-300"
       class="px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-300">
       Content Projection
+    </a>
+    <a routerLink="pipes" routerLinkActive="bg-cyan-800/80 text-cyan-300"
+      class="px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+      Pure vs Impure Pipes
     </a>
   </nav>
   <router-outlet></router-outlet>
