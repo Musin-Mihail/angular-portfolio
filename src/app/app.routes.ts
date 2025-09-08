@@ -43,6 +43,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./lab/lab-pipes/lab-pipes.component').then((m) => m.LabPipesComponent),
       },
+      {
+        path: 'pipes-advanced',
+        loadComponent: () =>
+          import('./lab/lab-pipes-advanced/lab-pipes-advanced.component').then(
+            (m) => m.LabPipesAdvancedComponent
+          ),
+      },
       { path: '', redirectTo: 'interceptor', pathMatch: 'full' },
     ],
   },

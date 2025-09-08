@@ -1,0 +1,31 @@
+<div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in space-y-4">
+  <h3 class="text-2xl font-bold text-orange-400">Pure Pipe: Продвинутый пример (фильтрация)</h3>
+  <p class="text-gray-400">
+    Этот пример использует "чистый" пайп для фильтрации пользователей по статусу "активен". Нажмите "Мутировать", чтобы
+    изменить статус Бориса в скрытом массиве. Список на экране не изменится.
+  </p>
+  <div class="flex gap-4">
+    <button (click)="mutateUserStatus()"
+      class="flex-1 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg">
+      Мутировать статус 'Бориса'
+    </button>
+    <button (click)="addUser()" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg">
+      Добавить пользователя
+    </button>
+  </div>
+  <div>
+    <p class="text-gray-400 font-medium mb-2">Отображаемый список (видит только статус 'активен'):</p>
+    <ul class="bg-gray-800 p-4 rounded-md min-h-[8rem]">
+      @for (user of users() | statusFilter: 'активен'; track user.id) {
+      <li class="text-green-300">{{ user.name }} ({{ user.status }})</li>
+      } @empty {
+      <p class="text-gray-500">Нет активных пользователей</p>
+      }
+    </ul>
+  </div>
+  <div>
+    <p class="text-gray-400 font-medium mb-2">Состояние скрытого массива (мутируется напрямую):</p>
+    <pre
+      class="bg-gray-800 text-sm text-yellow-300 p-4 rounded-md whitespace-pre-wrap"><code>{{ usersJson() }}</code></pre>
+  </div>
+</div>
