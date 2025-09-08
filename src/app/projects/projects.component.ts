@@ -1,12 +1,14 @@
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
-import { GithubRepo } from './github.service';
-import { GithubService } from './github.service';
+
+import { GithubRepo, GithubService } from './github.service';
 import { LanguageClassPipe } from './language-class.pipe';
+
 interface ReposState {
   repos: GithubRepo[];
   loading: boolean;
@@ -20,6 +22,31 @@ const GITHUB_USERNAME = 'Musin-Mihail';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(
+          ':leave',
+          [
+            stagger('50ms', [
+              animate('300ms ease-in', style({ opacity: 0, transform: 'scale(0.9)' })),
+            ]),
+          ],
+          { optional: true }
+        ),
+        query(
+          ':enter',
+          [
+            style({ opacity: 0, transform: 'scale(0.9)' }),
+            stagger('50ms', [
+              animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+            ]),
+          ],
+          { optional: true }
+        ),
+      ]),
+    ]),
+  ],
 })
 export class ProjectsComponent {
   private githubService = inject(GithubService);
