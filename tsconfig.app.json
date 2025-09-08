@@ -7,7 +7,7 @@
     ]
   },
   "include": [
-    "src/**/*.ts", "vitest.config.ts"],
+    "src/**/*.ts", "vitest.config.ts", "api/server.ts"],
   "exclude": [
     "src/**/*.spec.ts"
   ]
