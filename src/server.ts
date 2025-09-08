@@ -12,6 +12,7 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 app.get('/api/test-500', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.status(500).json({ message: 'Это симулированная внутренняя ошибка сервера!' });
 });
 
