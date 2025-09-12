@@ -10,8 +10,13 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 })
 export class LabUiElementsComponent {
   isToggled = signal(false);
+  isCustomCheckboxChecked = signal(false);
 
   toggle(): void {
     this.isToggled.update((value) => !value);
+  }
+
+  toggleCustomCheckbox(): void {
+    this.isCustomCheckboxChecked.update((value) => !value);
   }
 }

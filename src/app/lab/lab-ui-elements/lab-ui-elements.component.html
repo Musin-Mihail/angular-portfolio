@@ -2,8 +2,8 @@
   <div>
     <h3 class="text-2xl font-bold text-cyan-400 mb-3">Анимированный переключатель (Toggle Switch)</h3>
     <p class="text-gray-400 mb-6">
-      Стильный анимированный переключатель, созданный только с использованием CSS для анимации состояний.
-      Это демонстрирует работу с псевдоэлементами и transitions.
+      Стильный анимированный переключатель, созданный только с использованием CSS для анимации состояний. Это
+      демонстрирует работу с псевдоэлементами и transitions.
     </p>
     <div class="flex items-center space-x-4">
       <label for="animated-toggle" class="flex items-center cursor-pointer">
@@ -13,7 +13,8 @@
           <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform"></div>
         </div>
         <div class="ml-3 text-gray-300 font-medium">
-          Состояние: {{ isToggled() ? 'Включено' : 'Выключено' }}
+          Состояние: {{ isToggled() ?
+          'Включено' : 'Выключено' }}
         </div>
       </label>
     </div>
@@ -39,5 +40,25 @@
         </svg>
       </button>
     </div>
+  </div>
+  <div class="border-t border-gray-700 pt-8">
+    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Стилизованный кастомный чекбокс</h3>
+    <p class="text-gray-400 mb-6">
+      Демонстрация стилизации стандартного чекбокса. Стандартный input скрыт, а вместо него отображается кастомный
+      элемент с SVG-иконкой.
+    </p>
+    <label class="custom-checkbox-label">
+      <input type="checkbox" class="sr-only" [checked]="isCustomCheckboxChecked()" (change)="toggleCustomCheckbox()" />
+      <span class="custom-checkbox">
+        <svg class="custom-checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M19.916 4.626a.75.75 0 0 1 .208 1.04l-9 13.5a.75.75 0 0 1-1.154.114l-6-6a.75.75 0 0 1 1.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 0 1 1.04-.208Z"
+            clip-rule="evenodd" />
+        </svg>
+      </span>
+      <span class="ml-3 text-gray-300 font-medium">
+        Состояние: {{ isCustomCheckboxChecked() ? 'Выбран' : 'Не выбран' }}
+      </span>
+    </label>
   </div>
 </div>
