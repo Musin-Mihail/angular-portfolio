@@ -89,7 +89,7 @@
 
 1. Клонируйте репозиторий:
 
-       git clone [https://github.com/Musin-Mihail/angular-portfolio.git](https://github.com/Musin-Mihail/angular-portfolio.git)
+       git clone https://github.com/Musin-Mihail/angular-portfolio.git
 
 2. Перейдите в директорию проекта:
 
