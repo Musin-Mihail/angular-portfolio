@@ -1,21 +1,19 @@
 <div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in space-y-8">
-  <div>
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Анимированный переключатель (Toggle Switch)</h3>
+  @for (showcase of uiShowcases; track showcase.id; let i = $index) {
+  <div [class.border-t]="i > 0" class="border-gray-700" [class.pt-8]="i > 0">
+    <h3 class="text-2xl font-bold text-cyan-400 mb-3">{{ showcase.title }}</h3>
     <p class="text-gray-400 mb-6">
-      Стильный анимированный переключатель, созданный только с использованием CSS для анимации состояний. Это
-      демонстрирует работу с псевдоэлементами и transitions.
+      {{ showcase.description }}
     </p>
+
+    @switch (showcase.id) {
+    @case ('toggle') {
     <div class="flex items-center space-x-4">
       <app-toggle-switch [(checked)]="isToggled">Состояние: {{ isToggled() ? 'Включено' : 'Выключено' }}
       </app-toggle-switch>
     </div>
-  </div>
-  <div class="border-t border-gray-700 pt-8">
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Интерактивные кнопки с микроанимациями</h3>
-    <p class="text-gray-400 mb-6">
-      Несколько кнопок с разными эффектами при наведении и нажатии, демонстрирующие возможности CSS для создания
-      динамичного пользовательского интерфейса.
-    </p>
+    }
+    @case ('buttons') {
     <div class="flex flex-wrap items-center gap-6">
       <app-button variant="pulse">Эффект пульсации</app-button>
       <app-button variant="gradient">Градиентная анимация</app-button>
@@ -27,23 +25,13 @@
         </svg>
       </app-button>
     </div>
-  </div>
-  <div class="border-t border-gray-700 pt-8">
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Стилизованный кастомный чекбокс</h3>
-    <p class="text-gray-400 mb-6">
-      Демонстрация стилизации стандартного чекбокса. Стандартный input скрыт, а вместо него отображается кастомный
-      элемент с SVG-иконкой.
-    </p>
+    }
+    @case ('checkbox') {
     <app-custom-checkbox [(checked)]="isCustomCheckboxChecked">
       Состояние: {{ isCustomCheckboxChecked() ?'Выбран' : 'Не выбран' }}
     </app-custom-checkbox>
-  </div>
-  <div class="border-t border-gray-700 pt-8">
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Элемент с Parallax-эффектом</h3>
-    <p class="text-gray-400 mb-6">
-      Прокрутите страницу, чтобы увидеть, как фоновое изображение движется медленнее, чем основной контент, создавая
-      эффект глубины.
-    </p>
+    }
+    @case ('parallax') {
     <div appParallax parallaxImage="https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2400"
       [parallaxSpeed]="-0.2" class="parallax-container rounded-lg">
       <div class="parallax-bg"></div>
@@ -52,12 +40,8 @@
         <p class="text-lg text-white bg-black/50 p-4 rounded">Эффект работает при прокрутке всей страницы.</p>
       </div>
     </div>
-  </div>
-  <div class="border-t border-gray-700 pt-8">
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Карточка с 3D-эффектом при наведении</h3>
-    <p class="text-gray-400 mb-6">
-      Карточка, которая слегка поворачивается в сторону движения курсора, создавая псевдо-3D эффект.
-    </p>
+    }
+    @case ('3d-card') {
     <div class="card-3d-container">
       <div appCard3d [appCard3dIntensity]="30"
         class="card-3d bg-gray-900/50 rounded-xl shadow-lg border border-gray-700 flex flex-col items-center justify-center">
@@ -65,12 +49,8 @@
         <p class="mt-2 text-gray-400">Наведите на меня</p>
       </div>
     </div>
-  </div>
-  <div class="border-t border-gray-700 pt-8">
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Кастомный Tooltip (Доступная версия)</h3>
-    <p class="text-gray-400 mb-6">
-      Подсказка, созданная с помощью CSS и ARIA-атрибутов для доступности скринридерам.
-    </p>
+    }
+    @case ('tooltip') {
     <div class="flex justify-center items-center h-24">
       <span class="tooltip-container" tabindex="0" aria-describedby="custom-tooltip-1">
         Наведи на меня
@@ -79,5 +59,8 @@
         </span>
       </span>
     </div>
+    }
+    }
   </div>
+  }
 </div>
