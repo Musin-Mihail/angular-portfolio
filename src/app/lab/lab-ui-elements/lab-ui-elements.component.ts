@@ -3,11 +3,6 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { Card3dDirective } from '../../shared/directives/card-3d.directive';
 import { ParallaxDirective } from '../../shared/directives/parallax.directive';
 
-interface UiElementsState {
-  isToggled: boolean;
-  isCustomCheckboxChecked: boolean;
-}
-
 @Component({
   selector: 'app-lab-ui-elements',
   standalone: true,
@@ -17,19 +12,14 @@ interface UiElementsState {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LabUiElementsComponent {
-  public state = signal<UiElementsState>({
-    isToggled: false,
-    isCustomCheckboxChecked: false,
-  });
+  public isToggled = signal(false);
+  public isCustomCheckboxChecked = signal(false);
 
   toggle(): void {
-    this.state.update((current) => ({ ...current, isToggled: !current.isToggled }));
+    this.isToggled.update((current) => !current);
   }
 
   toggleCustomCheckbox(): void {
-    this.state.update((current) => ({
-      ...current,
-      isCustomCheckboxChecked: !current.isCustomCheckboxChecked,
-    }));
+    this.isCustomCheckboxChecked.update((current) => !current);
   }
 }
