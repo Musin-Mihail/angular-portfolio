@@ -1,8 +1,71 @@
 input:checked ~ .dot {
   transform: translateX(100%);
-  background-color: #2dd4bf; /* cyan-400 */
+  background-color: #2dd4bf;
 }
 
 input:checked ~ .block {
-  background-color: #115e59; /* teal-800 */
+  background-color: #115e59;
+}
+
+.btn {
+  @apply py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-pulse {
+  @apply bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500;
+  box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+}
+
+.btn-pulse:hover {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(99, 102, 241, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+}
+
+.btn-gradient {
+  @apply text-white font-bold;
+  background-image: linear-gradient(to right, #06b6d4 0%, #ec4899 50%, #06b6d4 100%);
+  background-size: 200% auto;
+  transition: background-position 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-gradient:hover {
+  background-position: right center;
+}
+
+.btn-icon {
+  @apply bg-teal-600 hover:bg-teal-700 focus:ring-teal-500 flex items-center justify-center gap-2;
+}
+
+.btn-icon svg {
+  @apply w-0 h-5 transition-all duration-300 ease-in-out;
+  fill: currentColor;
+  opacity: 0;
+}
+
+.btn-icon:hover svg {
+  @apply w-5;
+  opacity: 1;
+}
+
+.btn-icon span {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+.btn-icon:hover span {
+  transform: translateX(-4px);
 }

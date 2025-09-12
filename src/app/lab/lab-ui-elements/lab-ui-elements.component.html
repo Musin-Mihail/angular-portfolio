@@ -5,7 +5,6 @@
       Стильный анимированный переключатель, созданный только с использованием CSS для анимации состояний.
       Это демонстрирует работу с псевдоэлементами и transitions.
     </p>
-
     <div class="flex items-center space-x-4">
       <label for="animated-toggle" class="flex items-center cursor-pointer">
         <div class="relative">
@@ -17,6 +16,28 @@
           Состояние: {{ isToggled() ? 'Включено' : 'Выключено' }}
         </div>
       </label>
+    </div>
+  </div>
+  <div class="border-t border-gray-700 pt-8">
+    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Интерактивные кнопки с микроанимациями</h3>
+    <p class="text-gray-400 mb-6">
+      Несколько кнопок с разными эффектами при наведении и нажатии, демонстрирующие возможности CSS для создания
+      динамичного пользовательского интерфейса.
+    </p>
+    <div class="flex flex-wrap items-center gap-6">
+      <button class="btn btn-pulse">
+        Эффект пульсации
+      </button>
+      <button class="btn btn-gradient">
+        Градиентная анимация
+      </button>
+      <button class="btn btn-icon">
+        <span>Отправить</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+        </svg>
+      </button>
     </div>
   </div>
 </div>
