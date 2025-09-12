@@ -89,3 +89,20 @@ input[type='checkbox']:checked + .custom-checkbox {
 input[type='checkbox']:checked + .custom-checkbox > .custom-checkbox-icon {
   @apply opacity-100 scale-100;
 }
+
+.card-3d-container {
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.card-3d {
+  width: 320px;
+  height: 180px;
+  transform-style: preserve-3d;
+  transition: transform 0.1s linear;
+  will-change: transform;
+}

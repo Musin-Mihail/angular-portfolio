@@ -57,8 +57,23 @@
         </svg>
       </span>
       <span class="ml-3 text-gray-300 font-medium">
-        Состояние: {{ isCustomCheckboxChecked() ? 'Выбран' : 'Не выбран' }}
+        Состояние: {{ isCustomCheckboxChecked() ?
+        'Выбран' : 'Не выбран' }}
       </span>
     </label>
+  </div>
+  <div class="border-t border-gray-700 pt-8">
+    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Карточка с 3D-эффектом при наведении</h3>
+    <p class="text-gray-400 mb-6">
+      Карточка, которая слегка поворачивается в сторону движения курсора, создавая псевдо-3D эффект. Это демонстрирует
+      владение <code>transform (rotateX, rotateY)</code> и <code>perspective</code>.
+    </p>
+    <div class="card-3d-container" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+      <div #card3d
+        class="card-3d bg-gray-900/50 rounded-xl shadow-lg border border-gray-700 flex flex-col items-center justify-center">
+        <h4 class="text-xl font-bold text-cyan-300">Псевдо-3D Карта</h4>
+        <p class="mt-2 text-gray-400">Наведите на меня</p>
+      </div>
+    </div>
   </div>
 </div>
