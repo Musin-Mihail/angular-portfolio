@@ -65,8 +65,8 @@
       Прокрутите страницу, чтобы увидеть, как фоновое изображение движется медленнее, чем основной контент, создавая
       эффект глубины.
     </p>
-    <div #parallaxContainer class="parallax-container rounded-lg">
-      <div #parallaxBg class="parallax-bg"></div>
+    <div appParallax class="parallax-container rounded-lg">
+      <div class="parallax-bg"></div>
       <div class="parallax-content text-center p-8">
         <h4 class="text-2xl font-bold text-white mb-4 bg-black/50 p-2 rounded">Контент</h4>
         <p class="text-lg text-white bg-black/50 p-4 rounded">
@@ -78,11 +78,10 @@
   <div class="border-t border-gray-700 pt-8">
     <h3 class="text-2xl font-bold text-cyan-400 mb-3">Карточка с 3D-эффектом при наведении</h3>
     <p class="text-gray-400 mb-6">
-      Карточка, которая слегка поворачивается в сторону движения курсора, создавая псевдо-3D эффект. Это демонстрирует
-      владение <code>transform (rotateX, rotateY)</code> и <code>perspective</code>.
+      Карточка, которая слегка поворачивается в сторону движения курсора, создавая псевдо-3D эффект.
     </p>
-    <div class="card-3d-container" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
-      <div #card3d
+    <div class="card-3d-container">
+      <div appCard3d
         class="card-3d bg-gray-900/50 rounded-xl shadow-lg border border-gray-700 flex flex-col items-center justify-center">
         <h4 class="text-xl font-bold text-cyan-300">Псевдо-3D Карта</h4>
         <p class="mt-2 text-gray-400">Наведите на меня</p>
@@ -90,14 +89,16 @@
     </div>
   </div>
   <div class="border-t border-gray-700 pt-8">
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Кастомный Tooltip (всплывающая подсказка)</h3>
+    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Кастомный Tooltip (Доступная версия)</h3>
     <p class="text-gray-400 mb-6">
-      Демонстрация всплывающей подсказки, созданной с помощью CSS. Она использует псевдоэлементы для создания "хвостика"
-      и
-      позиционируется относительно родительского элемента.
+      Подсказка, созданная с помощью CSS и ARIA-атрибутов для доступности скринридерам.
     </p>
     <div class="flex justify-center items-center h-24">
-      <span class="tooltip-container" data-tooltip="Это кастомная подсказка!"> Наведи на меня </span>
+      <span class="tooltip-container" tabindex="0" aria-describedby="custom-tooltip-1">
+        Наведи на меня
+        <span id="custom-tooltip-1" role="tooltip" class="tooltip-content">
+          Это кастомная и доступная подсказка!
+        </span>
+      </span>
     </div>
   </div>
-</div>
