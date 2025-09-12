@@ -131,3 +131,37 @@ input[type='checkbox']:checked + .custom-checkbox > .custom-checkbox-icon {
 .parallax-content {
   position: relative;
 }
+
+.tooltip-container {
+  @apply relative inline-block cursor-pointer border-b border-dashed border-cyan-400 text-cyan-400;
+  padding-bottom: 2px;
+}
+
+.tooltip-container::before,
+.tooltip-container::after {
+  @apply absolute left-1/2 -translate-x-1/2 z-10;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+.tooltip-container::before {
+  content: attr(data-tooltip);
+  @apply bottom-full mb-3 w-max max-w-xs rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white shadow-lg ring-1 ring-gray-700;
+  transform: translateX(-50%) translateY(5px);
+}
+
+.tooltip-container::after {
+  content: '';
+  @apply bottom-full mb-2 border-x-8 border-t-8 border-x-transparent border-t-gray-900;
+  filter: drop-shadow(0 -1px 1px rgb(31 41 55 / 0.8));
+  transform: translateX(-50%) translateY(5px);
+}
+
+.tooltip-container:hover::before,
+.tooltip-container:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}

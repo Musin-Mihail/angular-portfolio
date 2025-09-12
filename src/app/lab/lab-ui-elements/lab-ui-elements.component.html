@@ -12,9 +12,7 @@
           <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
           <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform"></div>
         </div>
-        <div class="ml-3 text-gray-300 font-medium">
-          Состояние: {{ isToggled() ?
-          'Включено' : 'Выключено' }}
+        <div class="ml-3 text-gray-300 font-medium"> Состояние: {{ isToggled() ? 'Включено' : 'Выключено' }}
         </div>
       </label>
     </div>
@@ -57,8 +55,7 @@
         </svg>
       </span>
       <span class="ml-3 text-gray-300 font-medium">
-        Состояние: {{ isCustomCheckboxChecked() ?
-        'Выбран' : 'Не выбран' }}
+        Состояние: {{ isCustomCheckboxChecked() ? 'Выбран' : 'Не выбран' }}
       </span>
     </label>
   </div>
@@ -90,6 +87,17 @@
         <h4 class="text-xl font-bold text-cyan-300">Псевдо-3D Карта</h4>
         <p class="mt-2 text-gray-400">Наведите на меня</p>
       </div>
+    </div>
+  </div>
+  <div class="border-t border-gray-700 pt-8">
+    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Кастомный Tooltip (всплывающая подсказка)</h3>
+    <p class="text-gray-400 mb-6">
+      Демонстрация всплывающей подсказки, созданной с помощью CSS. Она использует псевдоэлементы для создания "хвостика"
+      и
+      позиционируется относительно родительского элемента.
+    </p>
+    <div class="flex justify-center items-center h-24">
+      <span class="tooltip-container" data-tooltip="Это кастомная подсказка!"> Наведи на меня </span>
     </div>
   </div>
 </div>
