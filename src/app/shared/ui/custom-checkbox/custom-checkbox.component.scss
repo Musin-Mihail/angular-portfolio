@@ -1,0 +1,26 @@
+:host {
+  --transition-duration-fast: 0.2s;
+  --transition-easing: ease-in-out;
+}
+
+.custom-checkbox-label {
+  @apply flex items-center cursor-pointer;
+}
+
+.custom-checkbox {
+  @apply w-6 h-6 bg-gray-700 border-2 border-gray-500 rounded-md flex items-center justify-center;
+  transition: all var(--transition-duration-fast) var(--transition-easing);
+}
+
+.custom-checkbox-icon {
+  @apply w-4 h-4 text-white opacity-0 scale-75;
+  transition: all var(--transition-duration-fast) var(--transition-easing);
+}
+
+input[type='checkbox']:checked + .custom-checkbox {
+  @apply bg-cyan-600 border-cyan-500;
+}
+
+input[type='checkbox']:checked + .custom-checkbox > .custom-checkbox-icon {
+  @apply opacity-100 scale-100;
+}
