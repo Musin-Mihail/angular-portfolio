@@ -1,10 +1,12 @@
-import { Directive, ElementRef, HostListener, inject, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appCard3d]',
   standalone: true,
 })
 export class Card3dDirective {
+  @Input('appCard3dIntensity') intensity: number = 25;
+
   private el = inject(ElementRef<HTMLElement>);
   private renderer = inject(Renderer2);
 
@@ -14,8 +16,8 @@ export class Card3dDirective {
     const x = event.clientX - left;
     const y = event.clientY - top;
 
-    const rotateX = (y / height - 0.5) * -25;
-    const rotateY = (x / width - 0.5) * 25;
+    const rotateX = (y / height - 0.5) * -this.intensity;
+    const rotateY = (x / width - 0.5) * this.intensity;
 
     this.renderer.setStyle(
       this.el.nativeElement,

@@ -17,6 +17,8 @@ import {
 })
 export class ParallaxDirective implements OnInit, AfterViewInit, OnDestroy {
   @Input() parallaxImage: string | null = null;
+  @Input() parallaxSpeed: number = -0.15;
+
   private el = inject(ElementRef<HTMLElement>);
   private renderer = inject(Renderer2);
   private platformId = inject(PLATFORM_ID);
@@ -72,8 +74,7 @@ export class ParallaxDirective implements OnInit, AfterViewInit, OnDestroy {
     const viewportCenter = window.innerHeight / 2;
     const elementCenter = rect.top + rect.height / 2;
     const difference = viewportCenter - elementCenter;
-    const speed = -0.15;
-    const offset = difference * speed;
+    const offset = difference * this.parallaxSpeed;
 
     this.renderer.setStyle(this.parallaxBg, 'transform', `translateY(${offset}px)`);
   }

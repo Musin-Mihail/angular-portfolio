@@ -1,0 +1,83 @@
+:host {
+  --brand-cyan-600: #0891b2;
+  --transition-duration-normal: 0.3s;
+}
+
+.btn {
+  @apply py-3 px-6 rounded-lg font-semibold text-white transition-all ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800;
+  duration: var(--transition-duration-normal);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-pulse {
+  @apply bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500;
+  isolation: isolate;
+}
+
+.btn-pulse::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--brand-cyan-600);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-pulse:hover::after {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.btn-gradient {
+  @apply text-white font-bold;
+  background-image: linear-gradient(to right, #06b6d4 0%, #ec4899 50%, #06b6d4 100%);
+  background-size: 200% auto;
+  transition: background-position 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-gradient:hover {
+  background-position: right center;
+}
+
+.btn-icon {
+  @apply bg-teal-600 hover:bg-teal-700 focus:ring-teal-500 flex items-center justify-center gap-2;
+}
+
+.btn-icon ::ng-deep svg {
+  @apply w-0 h-5 ease-in-out;
+  transition: all var(--transition-duration-normal);
+  fill: currentColor;
+  opacity: 0;
+}
+
+.btn-icon:hover ::ng-deep svg {
+  @apply w-5;
+  opacity: 1;
+}
+
+.btn-icon ::ng-deep span {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+.btn-icon:hover ::ng-deep span {
+  transform: translateX(-4px);
+}

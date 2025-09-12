@@ -17,15 +17,15 @@
       динамичного пользовательского интерфейса.
     </p>
     <div class="flex flex-wrap items-center gap-6">
-      <button class="btn btn-pulse">Эффект пульсации</button>
-      <button class="btn btn-gradient">Градиентная анимация</button>
-      <button class="btn btn-icon">
+      <app-button variant="pulse">Эффект пульсации</app-button>
+      <app-button variant="gradient">Градиентная анимация</app-button>
+      <app-button variant="icon">
         <span>Отправить</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
           <path
             d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
         </svg>
-      </button>
+      </app-button>
     </div>
   </div>
   <div class="border-t border-gray-700 pt-8">
@@ -45,7 +45,7 @@
       эффект глубины.
     </p>
     <div appParallax parallaxImage="https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2400"
-      class="parallax-container rounded-lg">
+      [parallaxSpeed]="-0.2" class="parallax-container rounded-lg">
       <div class="parallax-bg"></div>
       <div class="parallax-content text-center p-8">
         <h4 class="text-2xl font-bold text-white mb-4 bg-black/50 p-2 rounded">Контент</h4>
@@ -59,7 +59,7 @@
       Карточка, которая слегка поворачивается в сторону движения курсора, создавая псевдо-3D эффект.
     </p>
     <div class="card-3d-container">
-      <div appCard3d
+      <div appCard3d [appCard3dIntensity]="30"
         class="card-3d bg-gray-900/50 rounded-xl shadow-lg border border-gray-700 flex flex-col items-center justify-center">
         <h4 class="text-xl font-bold text-cyan-300">Псевдо-3D Карта</h4>
         <p class="mt-2 text-gray-400">Наведите на меня</p>
