@@ -2,6 +2,9 @@
   --brand-cyan-600: #0891b2;
   --brand-cyan-700: #0e7490;
   --pulse-color: rgba(99, 102, 241, 0.7);
+  --transition-duration-fast: 0.2s;
+  --transition-duration-normal: 0.3s;
+  --transition-easing: ease-in-out;
 }
 
 input:checked ~ .dot {
@@ -14,7 +17,8 @@ input:checked ~ .block {
 }
 
 .btn {
-  @apply py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800;
+  @apply py-3 px-6 rounded-lg font-semibold text-white transition-all ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800;
+  duration: var(--transition-duration-normal);
   position: relative;
   overflow: hidden;
   border: none;
@@ -73,7 +77,8 @@ input:checked ~ .block {
 }
 
 .btn-icon svg {
-  @apply w-0 h-5 transition-all duration-300 ease-in-out;
+  @apply w-0 h-5 ease-in-out;
+  transition: all var(--transition-duration-normal);
   fill: currentColor;
   opacity: 0;
 }
@@ -96,11 +101,13 @@ input:checked ~ .block {
 }
 
 .custom-checkbox {
-  @apply w-6 h-6 bg-gray-700 border-2 border-gray-500 rounded-md flex items-center justify-center transition-all duration-200 ease-in-out;
+  @apply w-6 h-6 bg-gray-700 border-2 border-gray-500 rounded-md flex items-center justify-center;
+  transition: all var(--transition-duration-fast) var(--transition-easing);
 }
 
 .custom-checkbox-icon {
-  @apply w-4 h-4 text-white opacity-0 scale-75 transition-all duration-200 ease-in-out;
+  @apply w-4 h-4 text-white opacity-0 scale-75;
+  transition: all var(--transition-duration-fast) var(--transition-easing);
 }
 
 input[type='checkbox']:checked + .custom-checkbox {
@@ -142,7 +149,6 @@ input[type='checkbox']:checked + .custom-checkbox > .custom-checkbox-icon {
   right: 0;
   height: 250%;
   z-index: -1;
-  background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2400');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -163,7 +169,8 @@ input[type='checkbox']:checked + .custom-checkbox > .custom-checkbox-icon {
   @apply w-max max-w-xs rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white shadow-lg ring-1 ring-gray-700;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transition: opacity var(--transition-duration-fast) var(--transition-easing),
+    transform var(--transition-duration-fast) var(--transition-easing);
   transform: translateX(-50%) translateY(5px);
   pointer-events: none;
 }

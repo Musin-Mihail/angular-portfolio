@@ -1,15 +1,25 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Directive, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  Renderer2,
+} from '@angular/core';
 
 @Directive({
   selector: '[appParallax]',
   standalone: true,
 })
 export class ParallaxDirective implements OnInit, AfterViewInit, OnDestroy {
+  @Input() parallaxImage: string | null = null;
   private el = inject(ElementRef<HTMLElement>);
   private renderer = inject(Renderer2);
   private platformId = inject(PLATFORM_ID);
-
   private parallaxBg: HTMLElement | null = null;
   private observer?: IntersectionObserver;
   private isVisible = false;
@@ -17,6 +27,9 @@ export class ParallaxDirective implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.parallaxBg = this.el.nativeElement.querySelector('.parallax-bg') as HTMLElement | null;
+      if (this.parallaxBg && this.parallaxImage) {
+        this.renderer.setStyle(this.parallaxBg, 'backgroundImage', `url('${this.parallaxImage}')`);
+      }
     }
   }
 
