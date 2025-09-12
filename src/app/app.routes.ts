@@ -50,6 +50,13 @@ export const routes: Routes = [
             (m) => m.LabPipesAdvancedComponent
           ),
       },
+      {
+        path: 'ui-elements',
+        loadComponent: () =>
+          import('./lab/lab-ui-elements/lab-ui-elements.component').then(
+            (m) => m.LabUiElementsComponent
+          ),
+      },
       { path: '', redirectTo: 'interceptor', pathMatch: 'full' },
     ],
   },
