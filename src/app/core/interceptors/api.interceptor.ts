@@ -1,15 +1,13 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
-
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   let modifiedReq = req;
-
-  if (!req.url.startsWith('https://api.github.com')) {
+  const backendUrl = 'https://dotnet-portfolio-production.up.railway.app';
+  if (!req.url.startsWith('https://api.github.com') && !req.url.startsWith(backendUrl)) {
     modifiedReq = req.clone({
       headers: req.headers.set('X-Custom-Auth', 'my-token'),
     });
   }
-
   return next(modifiedReq).pipe(
     catchError((err: unknown) => {
       if (err instanceof HttpErrorResponse) {

@@ -4,7 +4,6 @@ import { of } from 'rxjs';
 import { catchError, map, startWith } from 'rxjs/operators';
 import { BackendMessage, BackendService } from './backend.service';
 
-// Интерфейс для состояния нашего компонента
 interface BackendState {
   data: BackendMessage | null;
   loading: boolean;
