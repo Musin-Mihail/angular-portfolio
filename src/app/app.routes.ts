@@ -57,6 +57,11 @@ export const routes: Routes = [
             (m) => m.LabUiElementsComponent
           ),
       },
+      {
+        path: 'backend-test',
+        loadComponent: () =>
+          import('./lab/backend-test/backend-test.component').then((m) => m.BackendTestComponent),
+      },
       { path: '', redirectTo: 'interceptor', pathMatch: 'full' },
     ],
   },
