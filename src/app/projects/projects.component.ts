@@ -1,72 +1,77 @@
-import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
+import { catchError, debounceTime, map, startWith } from 'rxjs/operators';
 
-import { GithubRepo, GithubService } from './github.service';
-import { LanguageClassPipe } from './language-class.pipe';
+import { Project } from './project.model';
+import { ProjectService } from './project.service';
 
-interface ReposState {
-  repos: GithubRepo[];
+interface ProjectsState {
+  projects: Project[];
   loading: boolean;
   error: string | null;
 }
-const GITHUB_USERNAME = 'Musin-Mihail';
+
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, LanguageClassPipe],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('itemAnimation', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.9)' }),
-        animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
-      ]),
-      transition(':leave', [
-        animate('300ms ease-in', style({ opacity: 0, transform: 'scale(0.9)' })),
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
       ]),
     ]),
   ],
 })
 export class ProjectsComponent {
-  private githubService = inject(GithubService);
+  private projectService = inject(ProjectService);
   public searchControl = new FormControl<string>('', { nonNullable: true });
-  private readonly initialState: ReposState = { repos: [], loading: true, error: null };
-  private reposState = toSignal(
-    this.githubService.getRepos(GITHUB_USERNAME).pipe(
-      map((repos): ReposState => ({ repos, loading: false, error: null })),
+
+  private readonly initialState: ProjectsState = { projects: [], loading: true, error: null };
+
+  private state = toSignal(
+    this.projectService.getProjects().pipe(
+      map((projects): ProjectsState => ({ projects, loading: false, error: null })),
       startWith(this.initialState),
       catchError((err) => {
-        console.error('Ошибка при загрузке репозиториев:', err);
-        const errorMessage =
-          'Не удалось загрузить проекты. Проверьте консоль или попробуйте позже.';
-        return of<ReposState>({ repos: [], loading: false, error: errorMessage });
+        console.error('Ошибка при загрузке проектов:', err);
+        const errorMessage = 'Не удалось загрузить проекты. Попробуйте обновить страницу.';
+        return of<ProjectsState>({ projects: [], loading: false, error: errorMessage });
       })
     ),
     { initialValue: this.initialState }
   );
-  public readonly repos = computed(() => this.reposState().repos);
-  public readonly isLoading = computed(() => this.reposState().loading);
-  public readonly errorMsg = computed(() => this.reposState().error);
-  private readonly searchTerm = toSignal(
-    this.searchControl.valueChanges.pipe(startWith(''), debounceTime(300), distinctUntilChanged())
-  );
-  public readonly filteredRepos = computed(() => {
-    const allRepos = this.repos();
-    const term = (this.searchTerm() || '').toLowerCase();
+
+  public readonly isLoading = computed(() => this.state().loading);
+  public readonly errorMsg = computed(() => this.state().error);
+
+  // Явно указываем начальное значение, чтобы помочь TypeScript определить тип
+  private readonly searchTerm = toSignal(this.searchControl.valueChanges.pipe(debounceTime(300)), {
+    initialValue: '',
+  });
+
+  public readonly filteredProjects = computed(() => {
+    const allProjects = this.state().projects;
+    // Теперь searchTerm() всегда возвращает строку, и toLowerCase() безопасен
+    const term = this.searchTerm().toLowerCase();
+
     if (!term) {
-      return allRepos;
+      return allProjects;
     }
-    return allRepos.filter(
-      (repo) =>
-        repo.name.toLowerCase().includes(term) ||
-        (repo.description && repo.description.toLowerCase().includes(term))
+
+    return allProjects.filter(
+      (p) =>
+        p.title.toLowerCase().includes(term) ||
+        p.description.toLowerCase().includes(term) ||
+        p.tags.some((tag) => tag.toLowerCase().includes(term))
     );
   });
 }
