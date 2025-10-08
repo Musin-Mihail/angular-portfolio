@@ -1,9 +1,4 @@
-Разрешить всем поисковым роботам доступ ко всему сайту
 User-agent: *
 Allow: /
-
-Запретить индексацию чего-либо (в данном случае - ничего не запрещено)
 Disallow:
-
-Путь к карте сайта
 Sitemap: https://angular-portfolio-pi-nine.vercel.app/sitemap.xml
