@@ -30,7 +30,6 @@ describe('LabPipesAdvancedComponent', () => {
 
   it('mutateUserStatus should NOT update the view because the pipe is pure', () => {
     const initialListText = getRenderedListItems().map((li) => li.textContent);
-
     component.mutateUserStatus();
     fixture.detectChanges();
 
@@ -52,5 +51,16 @@ describe('LabPipesAdvancedComponent', () => {
     expect(newCount).toBe(initialCount + 1);
     const lastItem = getRenderedListItems().pop();
     expect(lastItem?.textContent).toContain('Пользователь 4 (активен)');
+  });
+
+  it('should not throw an error if the user to mutate is not found', () => {
+    const originalMasterList = (component as any).masterUsersList;
+    (component as any).masterUsersList = originalMasterList.filter(
+      (u: { id: number }) => u.id !== 2
+    );
+
+    expect(() => component.mutateUserStatus()).not.toThrow();
+
+    (component as any).masterUsersList = originalMasterList;
   });
 });

@@ -1,9 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClient,
-  provideHttpClient,
-  withInterceptors,
-} from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { vi, describe, it, expect, afterEach, beforeEach } from 'vitest';
 import { apiInterceptor } from './api.interceptor';
@@ -100,5 +96,24 @@ describe('apiInterceptor', () => {
 
     const req = httpMock.expectOne(testUrl);
     req.error(mockErrorEvent);
+  });
+
+  it('should handle client-side or network errors', () => {
+    const testUrl = '/api/some-url';
+    const expectedMessage = 'Произошла неизвестная ошибка';
+    const mockError = new ProgressEvent('error');
+
+    http.get(testUrl).subscribe({
+      next: () => {
+        throw new Error('should have failed with a client-side error');
+      },
+      error: (err) => {
+        expect(err).toBeInstanceOf(Error);
+        expect(err.message).toBe(expectedMessage);
+      },
+    });
+
+    const req = httpMock.expectOne(testUrl);
+    req.error(mockError);
   });
 });

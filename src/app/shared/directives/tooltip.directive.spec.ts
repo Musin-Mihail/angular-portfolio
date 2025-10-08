@@ -10,13 +10,20 @@ import { TooltipDirective } from './tooltip.directive';
 })
 class TestHostComponent {}
 
+@Component({
+  standalone: true,
+  imports: [TooltipDirective],
+  template: `<span appTooltip="">Hover me</span>`,
+})
+class TestHostEmptyTooltipComponent {}
+
 describe('TooltipDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let elementWithDirective: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent],
+      imports: [TestHostComponent, TestHostEmptyTooltipComponent, TooltipDirective],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -45,5 +52,31 @@ describe('TooltipDirective', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     expect(document.querySelector('.tooltip-content-dynamic')).toBeNull();
+  });
+
+  it('should not create tooltip if content is empty', async () => {
+    const emptyFixture = TestBed.createComponent(TestHostEmptyTooltipComponent);
+    const element = emptyFixture.debugElement.query(By.css('span')).nativeElement;
+    emptyFixture.detectChanges();
+
+    element.dispatchEvent(new MouseEvent('mouseenter'));
+    await emptyFixture.whenStable();
+    emptyFixture.detectChanges();
+
+    const tooltip = document.querySelector('.tooltip-content-dynamic');
+    expect(tooltip).toBeNull();
+  });
+
+  it('should not create a second tooltip on re-entering', async () => {
+    elementWithDirective.dispatchEvent(new MouseEvent('mouseenter'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    elementWithDirective.dispatchEvent(new MouseEvent('mouseenter'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const tooltips = document.querySelectorAll('.tooltip-content-dynamic');
+    expect(tooltips.length).toBe(1);
   });
 });

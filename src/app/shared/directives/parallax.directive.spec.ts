@@ -19,7 +19,6 @@ class MockIntersectionObserver implements IntersectionObserver {
 
   observe = observeSpy;
   disconnect = disconnectSpy;
-
   takeRecords = vi.fn();
   unobserve = vi.fn();
 }
@@ -34,6 +33,15 @@ class MockIntersectionObserver implements IntersectionObserver {
   `,
 })
 class TestHostComponent {}
+
+@Component({
+  standalone: true,
+  imports: [ParallaxDirective],
+  template: `
+    <div appParallax parallaxImage="test.jpg" style="height: 200px; position: relative;"></div>
+  `,
+})
+class TestHostNoBgComponent {}
 
 describe('ParallaxDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
@@ -51,7 +59,7 @@ describe('ParallaxDirective', () => {
     });
 
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent, ParallaxDirective],
+      imports: [TestHostComponent, TestHostNoBgComponent, ParallaxDirective],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -101,5 +109,12 @@ describe('ParallaxDirective', () => {
     fixture.destroy();
     expect(disconnectSpy).toHaveBeenCalled();
     expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
+  });
+});
+
+describe('ParallaxDirective without required element', () => {
+  it('should not throw an error if .parallax-bg is missing', () => {
+    const fixtureNoBg = TestBed.createComponent(TestHostNoBgComponent);
+    expect(() => fixtureNoBg.detectChanges()).not.toThrow();
   });
 });
