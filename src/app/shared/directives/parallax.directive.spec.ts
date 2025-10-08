@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { ParallaxDirective } from './parallax.directive';
-import { Renderer2 } from '@angular/core';
 
 let intersectionCallback: IntersectionObserverCallback;
 const observeSpy = vi.fn();
@@ -62,7 +61,6 @@ describe('ParallaxDirective', () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent, TestHostNoBgComponent, ParallaxDirective],
     }).compileComponents();
-
     fixture = TestBed.createComponent(TestHostComponent);
     const directiveDebugEl = fixture.debugElement.query(By.directive(ParallaxDirective));
     directiveElement = directiveDebugEl.nativeElement;
@@ -111,22 +109,31 @@ describe('ParallaxDirective', () => {
     expect(disconnectSpy).toHaveBeenCalled();
     expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
   });
-  it('should not apply transform on scroll if the element is not visible', () => {
+
+  it('should update background position on scroll when visible', () => {
     const renderer = fixture.componentRef.injector.get(Renderer2);
     const setStyleSpy = vi.spyOn(renderer, 'setStyle');
     const directiveInstance = fixture.debugElement
       .query(By.directive(ParallaxDirective))
       .injector.get(ParallaxDirective);
 
+    vi.spyOn(directiveElement, 'getBoundingClientRect').mockReturnValue({
+      top: 100,
+      height: 200,
+    } as DOMRect);
+
     intersectionCallback(
-      [{ isIntersecting: false }] as IntersectionObserverEntry[],
+      [{ isIntersecting: true }] as IntersectionObserverEntry[],
       {} as IntersectionObserver
     );
 
     (directiveInstance as any).updateParallax();
 
-    const transformCall = setStyleSpy.mock.calls.find((call) => call[1] === 'transform');
-    expect(transformCall).toBeUndefined();
+    expect(setStyleSpy).toHaveBeenCalledWith(
+      parallaxBgElement,
+      'transform',
+      expect.stringContaining('translateY')
+    );
   });
 });
 

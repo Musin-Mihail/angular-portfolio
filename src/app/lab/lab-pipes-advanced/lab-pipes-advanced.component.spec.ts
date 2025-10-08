@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { StatusFilterPipe } from '../../shared/pipes/status-filter.pipe';
 import { LabPipesAdvancedComponent } from './lab-pipes-advanced.component';
 
@@ -51,6 +51,17 @@ describe('LabPipesAdvancedComponent', () => {
     expect(newCount).toBe(initialCount + 1);
     const lastItem = getRenderedListItems().pop();
     expect(lastItem?.textContent).toContain('Пользователь 4 (активен)');
+  });
+
+  it('should not throw an error if the user to mutate is not found', () => {
+    const originalMasterList = (component as any).masterUsersList;
+    (component as any).masterUsersList = originalMasterList.filter(
+      (u: { id: number }) => u.id !== 2
+    );
+
+    expect(() => component.mutateUserStatus()).not.toThrow();
+
+    (component as any).masterUsersList = originalMasterList;
   });
 
   it('should not throw an error if the user to mutate is not found', () => {

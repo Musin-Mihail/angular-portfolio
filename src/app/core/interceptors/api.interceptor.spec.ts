@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { vi, describe, it, expect, afterEach, beforeEach } from 'vitest';
+import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import { apiInterceptor } from './api.interceptor';
 
 describe('apiInterceptor', () => {
@@ -116,6 +116,7 @@ describe('apiInterceptor', () => {
     const req = httpMock.expectOne(testUrl);
     req.error(mockError);
   });
+
   it('should handle non-HttpErrorResponse generic errors', () => {
     const testUrl = '/api/generic-error';
     const mockError = new Error('This is not an HTTP error');
@@ -125,6 +126,22 @@ describe('apiInterceptor', () => {
       next: () => {
         throw new Error('The request should have failed');
       },
+      error: (err) => {
+        expect(err).toBeInstanceOf(Error);
+        expect(err.message).toBe(expectedMessage);
+      },
+    });
+
+    const req = httpMock.expectOne(testUrl);
+    req.error(mockError as any);
+  });
+
+  it('should handle non-HttpErrorResponse errors', () => {
+    const testUrl = '/api/some-url';
+    const mockError = new Error('A generic error occurred');
+    const expectedMessage = 'Произошла неизвестная ошибка';
+
+    http.get(testUrl).subscribe({
       error: (err) => {
         expect(err).toBeInstanceOf(Error);
         expect(err.message).toBe(expectedMessage);
