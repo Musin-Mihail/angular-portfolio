@@ -116,4 +116,22 @@ describe('apiInterceptor', () => {
     const req = httpMock.expectOne(testUrl);
     req.error(mockError);
   });
+  it('should handle non-HttpErrorResponse generic errors', () => {
+    const testUrl = '/api/generic-error';
+    const mockError = new Error('This is not an HTTP error');
+    const expectedMessage = 'Произошла неизвестная ошибка';
+
+    http.get(testUrl).subscribe({
+      next: () => {
+        throw new Error('The request should have failed');
+      },
+      error: (err) => {
+        expect(err).toBeInstanceOf(Error);
+        expect(err.message).toBe(expectedMessage);
+      },
+    });
+
+    const req = httpMock.expectOne(testUrl);
+    req.error(mockError as any);
+  });
 });

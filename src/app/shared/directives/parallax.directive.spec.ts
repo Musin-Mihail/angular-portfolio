@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { ParallaxDirective } from './parallax.directive';
+import { Renderer2 } from '@angular/core';
 
 let intersectionCallback: IntersectionObserverCallback;
 const observeSpy = vi.fn();
@@ -110,11 +111,56 @@ describe('ParallaxDirective', () => {
     expect(disconnectSpy).toHaveBeenCalled();
     expect(window.removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
   });
+  it('should not apply transform on scroll if the element is not visible', () => {
+    const renderer = fixture.componentRef.injector.get(Renderer2);
+    const setStyleSpy = vi.spyOn(renderer, 'setStyle');
+    const directiveInstance = fixture.debugElement
+      .query(By.directive(ParallaxDirective))
+      .injector.get(ParallaxDirective);
+
+    intersectionCallback(
+      [{ isIntersecting: false }] as IntersectionObserverEntry[],
+      {} as IntersectionObserver
+    );
+
+    (directiveInstance as any).updateParallax();
+
+    const transformCall = setStyleSpy.mock.calls.find((call) => call[1] === 'transform');
+    expect(transformCall).toBeUndefined();
+  });
 });
 
 describe('ParallaxDirective without required element', () => {
   it('should not throw an error if .parallax-bg is missing', () => {
     const fixtureNoBg = TestBed.createComponent(TestHostNoBgComponent);
     expect(() => fixtureNoBg.detectChanges()).not.toThrow();
+  });
+});
+
+describe('ParallaxDirective without .parallax-bg', () => {
+  let fixture: ComponentFixture<TestHostNoBgComponent>;
+  let directiveInstance: ParallaxDirective;
+  let renderer: Renderer2;
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestHostNoBgComponent);
+    const directiveDebugEl = fixture.debugElement.query(By.directive(ParallaxDirective));
+    directiveInstance = directiveDebugEl.injector.get(ParallaxDirective);
+    renderer = fixture.componentRef.injector.get(Renderer2);
+    fixture.detectChanges();
+  });
+
+  it('should not call setStyle for transform on scroll if .parallax-bg is missing', () => {
+    const setStyleSpy = vi.spyOn(renderer, 'setStyle');
+
+    intersectionCallback(
+      [{ isIntersecting: true }] as IntersectionObserverEntry[],
+      {} as IntersectionObserver
+    );
+
+    (directiveInstance as any).updateParallax();
+
+    const transformCall = setStyleSpy.mock.calls.find((call) => call[1] === 'transform');
+    expect(transformCall).toBeUndefined();
   });
 });
