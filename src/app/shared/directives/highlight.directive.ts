@@ -10,7 +10,7 @@ export class HighlightDirective {
   constructor(private el: ElementRef, private renderer: Renderer2) {}
   @HostListener('mouseenter') onMouseEnter() {
     this.originalColor = this.el.nativeElement.style.backgroundColor;
-    this.highlight(this.appHighlight);
+    this.highlight(this.appHighlight || '#ffc107');
   }
   @HostListener('mouseleave') onMouseLeave() {
     this.highlight(this.originalColor || null);
