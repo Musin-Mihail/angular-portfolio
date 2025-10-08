@@ -1,3 +1,7 @@
+Разрешить всем поисковым роботам доступ ко всему сайту
 User-agent: *
 Allow: /
+Disallow:
+
+Путь к карте сайта
 Sitemap: https://angular-portfolio-pi-nine.vercel.app/sitemap.xml
