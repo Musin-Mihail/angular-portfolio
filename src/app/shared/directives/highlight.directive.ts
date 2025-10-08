@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/
   standalone: true,
 })
 export class HighlightDirective {
-  @Input() appHighlight: string = '#ffc107'; // Цвет по умолчанию из плана
+  @Input() appHighlight: string = '#ffc107';
   private originalColor: string = '';
   constructor(private el: ElementRef, private renderer: Renderer2) {}
   @HostListener('mouseenter') onMouseEnter() {

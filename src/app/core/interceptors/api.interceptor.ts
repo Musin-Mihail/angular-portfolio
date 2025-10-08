@@ -4,7 +4,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { catchError, throwError } from 'rxjs';
 
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
-  // Inject PLATFORM_ID to check the execution environment
   const platformId = inject(PLATFORM_ID);
 
   let modifiedReq = req;
@@ -25,9 +24,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
           errorMessage = 'Запрошенный ресурс не найден (Ошибка 404).';
         } else if (err.status === 500) {
           errorMessage = 'Произошла внутренняя ошибка сервера (Ошибка 500).';
-        }
-        // Only check for ErrorEvent if running in a browser environment
-        else if (isPlatformBrowser(platformId) && err.error instanceof ErrorEvent) {
+        } else if (isPlatformBrowser(platformId) && err.error instanceof ErrorEvent) {
           errorMessage = `Ошибка на стороне клиента: ${err.error.message}`;
         }
 

@@ -53,14 +53,12 @@ export class ProjectsComponent {
   public readonly isLoading = computed(() => this.state().loading);
   public readonly errorMsg = computed(() => this.state().error);
 
-  // Явно указываем начальное значение, чтобы помочь TypeScript определить тип
   private readonly searchTerm = toSignal(this.searchControl.valueChanges.pipe(debounceTime(300)), {
     initialValue: '',
   });
 
   public readonly filteredProjects = computed(() => {
     const allProjects = this.state().projects;
-    // Теперь searchTerm() всегда возвращает строку, и toLowerCase() безопасен
     const term = this.searchTerm().toLowerCase();
 
     if (!term) {
