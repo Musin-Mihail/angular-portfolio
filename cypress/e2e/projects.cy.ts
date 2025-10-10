@@ -33,4 +33,19 @@ describe('Projects Page', () => {
     cy.get('input[placeholder*="Поиск"]').clear();
     cy.get('div.grid > a').should('have.length', 3);
   });
+
+  it('should display an error message if the API fails', () => {
+  cy.intercept('GET', '**/api/Projects', {
+    statusCode: 500,
+    body: 'Internal Server Error',
+  }).as('getProjectsError');
+
+  cy.visit('/projects');
+  cy.wait('@getProjectsError');
+
+  cy.get('.loader').should('not.exist');
+  cy.get('div[role="alert"]')
+    .should('be.visible')
+    .and('contain.text', 'Не удалось загрузить проекты');
+});
 });

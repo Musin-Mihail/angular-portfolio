@@ -42,4 +42,12 @@ describe('Main Navigation', () => {
 
     cy.get('#mobile-menu').should('not.exist');
   });
+  it('should display mobile menu button on tablet viewport', () => {
+    cy.viewport(767, 1024);
+    cy.visit('/');
+
+    cy.get('nav .hidden.md\\:flex').should('not.be.visible');
+
+    cy.get('button[aria-label="Открыть меню"]').should('be.visible');
+  });
 });

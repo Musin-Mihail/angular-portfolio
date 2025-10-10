@@ -10,7 +10,7 @@ describe('Laboratory Section', () => {
       );
       cy.contains('button', 'Отправить успешный запрос').click();
       cy.wait('@successReq');
-      cy.get('.text-green-300').should('contain.text', 'Запрос успешно выполнен!');
+      cy.get('.text-green-200').should('contain.text', 'Запрос успешно выполнен!');
     });
 
     it('should show a 404 error message', () => {
@@ -47,6 +47,15 @@ describe('Laboratory Section', () => {
       highlightDiv.should('not.have.css', 'background-color', 'rgba(22, 163, 74, 0.3)');
       highlightDiv.trigger('mouseenter');
       highlightDiv.should('have.css', 'background-color', 'rgba(22, 163, 74, 0.3)');
+    });
+    it('should remove highlight on mouseleave for [appHighlight]', () => {
+      const highlightDiv = cy.get('div[apphighlight]');
+
+      highlightDiv.trigger('mouseenter');
+      highlightDiv.should('have.css', 'background-color', 'rgba(22, 163, 74, 0.3)');
+
+      highlightDiv.trigger('mouseleave');
+      highlightDiv.should('not.have.css', 'background-color', 'rgba(22, 163, 74, 0.3)');
     });
   });
 
@@ -113,6 +122,15 @@ describe('Laboratory Section', () => {
 
       cy.get('.tooltip-host').trigger('mouseleave');
       cy.get('body').find('div[role="tooltip"]').should('not.exist');
+    });
+    it('should apply and reset transform on 3D card', () => {
+      cy.get('div[appcard3d]').as('card');
+
+      cy.get('@card').trigger('mousemove', { clientX: 100, clientY: 50 });
+      cy.get('@card').should('have.css', 'transform').and('not.eq', 'none');
+
+      cy.get('@card').trigger('mouseleave');
+      cy.get('@card').should('have.css', 'transform').and('include', 'matrix(1, 0, 0, 1, 0, 0)');
     });
   });
 

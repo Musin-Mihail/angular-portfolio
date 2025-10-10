@@ -1,8 +1,8 @@
 <div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in space-y-8">
   @for (showcase of uiShowcases; track showcase.id; let i = $index) {
   <div [class.border-t]="i > 0" class="border-gray-700" [class.pt-8]="i > 0">
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">{{ showcase.title }}</h3>
-    <p class="text-gray-400 mb-6">
+    <h3 class="text-2xl font-bold text-cyan-200 mb-3">{{ showcase.title }}</h3>
+    <p class="text-gray-100 mb-6">
       {{ showcase.description }}
     </p>
 
@@ -45,8 +45,8 @@
     <div class="card-3d-container">
       <div appCard3d [appCard3dIntensity]="30"
         class="card-3d bg-gray-900/50 rounded-xl shadow-lg border border-gray-700 flex flex-col items-center justify-center">
-        <h4 class="text-xl font-bold text-cyan-300">Псевдо-3D Карта</h4>
-        <p class="mt-2 text-gray-400">Наведите на меня</p>
+        <h4 class="text-xl font-bold text-cyan-200">Псевдо-3D Карта</h4>
+        <p class="mt-2 text-gray-100">Наведите на меня</p>
       </div>
     </div>
     }

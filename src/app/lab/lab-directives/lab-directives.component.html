@@ -1,7 +1,7 @@
 <div class="bg-gray-800 rounded-xl shadow-2xl p-8 animate-fade-in space-y-8">
   <div>
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Структурная директива: *appUnless</h3>
-    <p class="text-gray-400 mb-6">
+    <h3 class="text-2xl font-bold text-cyan-200 mb-3">Структурная директива: *appUnless</h3>
+    <p class="text-gray-100 mb-6">
       Эта директива работает как <code>*ngIf</code>, но наоборот: отображает элемент, когда условие ложно.
     </p>
 
@@ -13,7 +13,7 @@
           <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
           <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform"></div>
         </div>
-        <div class="ml-3 text-gray-300 font-medium">
+        <div class="ml-3 text-gray-100 font-medium">
           Показать блок (isBoxVisible = {{ isBoxVisible() }})
         </div>
       </label>
@@ -29,7 +29,7 @@
 
     @if (isBoxVisible()) {
     <div class="p-6 bg-gray-700/50 border border-gray-600 rounded-lg transition-all duration-300">
-      <p class="text-gray-400">
+      <p class="text-gray-100">
         Сейчас блок для директивы <code>*appUnless</code> скрыт.
       </p>
     </div>
@@ -37,13 +37,13 @@
   </div>
 
   <div>
-    <h3 class="text-2xl font-bold text-cyan-400 mb-3">Атрибутивная директива: [appHighlight]</h3>
-    <p class="text-gray-400 mb-6">
+    <h3 class="text-2xl font-bold text-cyan-200 mb-3">Атрибутивная директива: [appHighlight]</h3>
+    <p class="text-gray-100 mb-6">
       Эта директива изменяет стиль элемента при взаимодействии с ним.
     </p>
     <div appHighlight="rgba(22, 163, 74, 0.3)"
       class="p-6 bg-gray-900/50 border border-gray-700 rounded-lg transition-colors duration-300 cursor-pointer">
-      <p class="text-green-300 font-medium text-center">
+      <p class="text-green-200 font-medium text-center">
         Наведи на меня, чтобы увидеть атрибутивную директиву в действии.
       </p>
     </div>

@@ -1,13 +1,13 @@
 <div class="min-h-screen bg-gray-900 text-white font-sans">
   <header class="bg-gray-800 shadow-lg sticky top-0 z-50">
     <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="text-2xl font-bold text-cyan-400">
+      <div class="text-2xl font-bold text-cyan-200">
         <a routerLink="/">Интерактивная Лаборатория</a>
       </div>
       <div class="hidden md:flex space-x-6 text-lg">
         @for (link of navLinks; track link.path) {
-        <a [routerLink]="link.path" routerLinkActive="text-cyan-400 border-b-2 border-cyan-400"
-          [routerLinkActiveOptions]="link.options" class="hover:text-cyan-300 transition-colors duration-300 pb-1">
+        <a [routerLink]="link.path" routerLinkActive="text-cyan-200 border-b-2 border-cyan-400"
+          [routerLinkActiveOptions]="link.options" class="hover:text-cyan-200 transition-colors duration-300 pb-1">
           {{ link.label }}
         </a>
         }
@@ -34,7 +34,7 @@
         @for (link of navLinks; track link.path) {
         <a [routerLink]="link.path" routerLinkActive="bg-cyan-900 text-white" [routerLinkActiveOptions]="link.options"
           (click)="closeMobileMenu()"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          class="text-gray-100 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
           {{ link.label }}
         </a>
         }
