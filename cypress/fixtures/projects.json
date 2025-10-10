@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Angular App",
+    "description": "A project using TypeScript.",
+    "tags": [
+      "Angular",
+      "TypeScript"
+    ],
+    "projectUrl": ""
+  },
+  {
+    "id": 2,
+    "title": ".NET Web API",
+    "description": "A backend service.",
+    "tags": [
+      "C#",
+      ".NET"
+    ],
+    "projectUrl": ""
+  },
+  {
+    "id": 3,
+    "title": "Full-Stack Solution",
+    "description": "An Angular and .NET app.",
+    "tags": [
+      "Angular",
+      ".NET"
+    ],
+    "projectUrl": ""
+  }
+]
