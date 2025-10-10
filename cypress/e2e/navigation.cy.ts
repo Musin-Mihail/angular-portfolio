@@ -28,4 +28,18 @@ describe('Main Navigation', () => {
     cy.get('button[aria-label="Закрыть меню"]').click();
     cy.get('#mobile-menu').should('not.exist');
   });
+
+  it('should navigate via the mobile menu and close it afterward', () => {
+    cy.viewport('iphone-6');
+    cy.visit('/');
+
+    cy.get('button[aria-label="Открыть меню"]').click();
+    cy.get('#mobile-menu').should('be.visible');
+
+    cy.get('#mobile-menu').contains('a', 'Проекты').click();
+
+    cy.location('pathname').should('eq', '/projects');
+
+    cy.get('#mobile-menu').should('not.exist');
+  });
 });

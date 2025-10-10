@@ -26,4 +26,11 @@ describe('Projects Page', () => {
     cy.get('div.grid > a').should('not.exist');
     cy.get('div.text-center').should('contain.text', 'Проекты не найдены.');
   });
+
+  it('should show all projects again after clearing the filter', () => {
+    cy.get('input[placeholder*="Поиск"]').type('Angular');
+    cy.get('div.grid > a').should('have.length', 2);
+    cy.get('input[placeholder*="Поиск"]').clear();
+    cy.get('div.grid > a').should('have.length', 3);
+  });
 });
